@@ -96,8 +96,6 @@ if __name__ == "__main__":
             [-1, -1, -1, 1, 3, 7, -1, 9, 5],
             [-1, -1, 8, 4, -1, -1, 6, -1, -1]
         ]
-        print("The puzzle chosen to be solved: ")
-        display(sudoku_example)
     else:
         sudoku_example = []
         print("Please enter your puzzle in the displayed format: ")
@@ -110,8 +108,12 @@ if __name__ == "__main__":
         for i in range(9):
             temp_list = list(map(int, input().split()))
             sudoku_example.append(temp_list)
-    print(sudoku_example)
+    print("\nThe puzzle chosen to be solved: ")
+    for i in range(9):
+        for j in sudoku_example[i]:
+            print(str(j), end=" ")
+        print()
     print()
     solve(sudoku_example)
-    print("\nHere is the solved puzzle!")
+    print("Here is the solved puzzle!")
     display(sudoku_example)
