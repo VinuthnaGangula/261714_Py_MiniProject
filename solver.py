@@ -5,10 +5,10 @@ from pprint import pprint
 # Returns the values of row and column for the next empty cell
 def next_empty_cell(puzzle):
     # let the empty cells of puzzle be represented as '-1'
-    for i in range(9):
-        for j in range(9):
-            if puzzle[i][j] == -1:
-                return i, j
+    for p in range(9):
+        for q in range(9):
+            if puzzle[p][q] == -1:
+                return p, q
 
     # If the puzzle is completely filled.
     return None, None
@@ -32,9 +32,9 @@ def valid_guess(puzzle, row_val, col_val, val):
     # Evaluate the start column index of the matrix
     c = (col_val // 3) * 3
 
-    for i in range(r, r + 3):
-        for j in range(c, c + 3):
-            if val == puzzle[i][j]:
+    for p in range(r, r + 3):
+        for q in range(c, c + 3):
+            if val == puzzle[p][q]:
                 return False
 
     # If the value is not found, then it can be placed in the cell.
@@ -65,6 +65,25 @@ def solve(grid):
     return False
 
 
+def validate_puzzle(puzzle):
+    # Check if the incomplete puzzle is valid or not.
+    # Check for duplicates in row.
+    for r in range(9):
+        for c in range(9):
+            if puzzle[r][c] != -1:
+                if puzzle[r][c] in puzzle[(c + 1):] or puzzle[r][c] == 0 or puzzle[r][c] < 0:
+                    return False
+    # Check for duplicates in column.
+    for p in range(9):
+        col = [puzzle[p][q] for q in range(9)]
+        for c in range(9):
+            if col[c] != -1:
+                if col[c] in col[(c+1):]:
+                    return False
+
+    return True
+
+
 def display(puzzle):
     # To display the sudoku.
     for i in range(len(puzzle)):
@@ -82,6 +101,7 @@ def display(puzzle):
 
 if __name__ == "__main__":
     choice = int(input('Enter 1 to enter your puzzle or Enter 2 to choose a random puzzle: '))
+    sudoku_example = []
     if choice != 1:
         sudoku_example = [
             [1, -1, -1, 3, 8, -1, -1, 5, 7],
@@ -97,23 +117,28 @@ if __name__ == "__main__":
             [-1, -1, 8, 4, -1, -1, 6, -1, -1]
         ]
     else:
-        sudoku_example = []
         print("Please enter your puzzle in the displayed format: ")
         for i in range(9):
             for j in range(9):
-                print(0, end=" ")
+                print((i + j) % 10, end=" ")
             print()
         print("Enter -1 to represent empty cells in the puzzle.")
         print("Enter your puzzle: ")
         for i in range(9):
             temp_list = list(map(int, input().split()))
             sudoku_example.append(temp_list)
-    print("\nThe puzzle chosen to be solved: ")
-    for i in range(9):
-        for j in sudoku_example[i]:
-            print(str(j), end=" ")
+
+    if validate_puzzle(sudoku_example):
+        print("\nThe puzzle chosen to be solved: ")
+        for i in range(9):
+            for j in sudoku_example[i]:
+                print(str(j), end=" ")
+            print()
         print()
-    print()
-    solve(sudoku_example)
-    print("Here is the solved puzzle!")
-    display(sudoku_example)
+        if solve(sudoku_example):
+            print("Here is the solved puzzle!")
+            display(sudoku_example)
+        else:
+            print("The puzzle is invalid! Sorry, It can't be solved.")
+    else:
+        print("The puzzle is invalid! Sorry, It can't be solved.")
