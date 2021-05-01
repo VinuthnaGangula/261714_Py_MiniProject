@@ -1,7 +1,5 @@
 # Implementation of Sudoku puzzle solver
-from pprint import pprint
-
-
+import generator
 # Returns the values of row and column for the next empty cell
 def next_empty_cell(puzzle):
     # let the empty cells of puzzle be represented as '-1'
@@ -100,9 +98,23 @@ def display(puzzle):
 
 
 if __name__ == "__main__":
-    choice = int(input('Enter 1 to enter your puzzle or Enter 2 to choose a random puzzle: '))
+    print('1. Solve your puzzle.\n2. Solve a random puzzle generated using generator file\n3. Solve a default example puzzle.')
+    choice = int(input('Enter your choice: '))
     sudoku_example = []
-    if choice != 1:
+    if choice == 1:
+        print("Please enter your puzzle in the displayed format: ")
+        for i in range(9):
+            for j in range(9):
+                print(j+1, end=" ")
+            print()
+        print("Please use -1 to represent empty cells in the puzzle.")
+        print("Enter your puzzle: ")
+        for i in range(9):
+            temp_list = list(map(int, input().split()))
+            sudoku_example.append(temp_list)
+    elif choice == 2:
+        sudoku_example = generator.generate_puzzle()
+    else:
         sudoku_example = [
             [1, -1, -1, 3, 8, -1, -1, 5, 7],
             [-1, -1, 3, -1, 4, 6, 1, -1, -1],
@@ -116,18 +128,6 @@ if __name__ == "__main__":
             [-1, -1, -1, 1, 3, 7, -1, 9, 5],
             [-1, -1, 8, 4, -1, -1, 6, -1, -1]
         ]
-    else:
-        print("Please enter your puzzle in the displayed format: ")
-        for i in range(9):
-            for j in range(9):
-                print((i + j) % 10, end=" ")
-            print()
-        print("Enter -1 to represent empty cells in the puzzle.")
-        print("Enter your puzzle: ")
-        for i in range(9):
-            temp_list = list(map(int, input().split()))
-            sudoku_example.append(temp_list)
-
     if validate_puzzle(sudoku_example):
         print("\nThe puzzle chosen to be solved: ")
         for i in range(9):
