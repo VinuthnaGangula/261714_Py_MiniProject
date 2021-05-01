@@ -22,7 +22,7 @@ def valid_guess(puzzle, row_val, col_val, val):
         return False
 
     # Check if the value is already present in the column 'col_val'
-    c_list = [puzzle[i][col_val] for i in range(9)]
+    c_list = [puzzle[p][col_val] for p in range(9)]
     if val in c_list:
         return False
 
@@ -81,7 +81,9 @@ def display(puzzle):
 
 
 if __name__ == "__main__":
-    sudoku_example = [
+    choice = int(input('Enter 1 to enter your puzzle or Enter 2 to choose a random puzzle: '))
+    if choice != 1:
+        sudoku_example = [
             [1, -1, -1, 3, 8, -1, -1, 5, 7],
             [-1, -1, 3, -1, 4, 6, 1, -1, -1],
             [2, 8, 9, -1, 5, -1, -1, -1, -1],
@@ -93,6 +95,23 @@ if __name__ == "__main__":
             [5, 3, 1, -1, 9, -1, 4, -1, 2],
             [-1, -1, -1, 1, 3, 7, -1, 9, 5],
             [-1, -1, 8, 4, -1, -1, 6, -1, -1]
-            ]
+        ]
+        print("The puzzle chosen to be solved: ")
+        display(sudoku_example)
+    else:
+        sudoku_example = []
+        print("Please enter your puzzle in the displayed format: ")
+        for i in range(9):
+            for j in range(9):
+                print(0, end=" ")
+            print()
+        print("Enter -1 to represent empty cells in the puzzle.")
+        print("Enter your puzzle: ")
+        for i in range(9):
+            temp_list = list(map(int, input().split()))
+            sudoku_example.append(temp_list)
+    print(sudoku_example)
+    print()
     solve(sudoku_example)
+    print("\nHere is the solved puzzle!")
     display(sudoku_example)
