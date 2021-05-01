@@ -2,7 +2,7 @@
 
 ## Solving Sudoku Puzzle using Python
 
-- The file **solver.py** can generate a solution to the Sudoku Puzzle. 
+- The file **solver.py** can generate a solution to a *valid* Sudoku Puzzle. 
 - The user can choose to solve :
   - a puzzle provided as input by him/her.
   - a random puzzle generated using **generator.py** file.
